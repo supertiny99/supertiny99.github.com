@@ -102,7 +102,7 @@ npm 中一个很棒的功能是你可以在本地（locally）安装可执行文
 安装使用 babel-cli, web pack 遇到的问题，本地安装完了不能直接在命令行使用 babel，webpack 这些命令。
 
 npm 中一个很棒的功能是你可以在本地（locally）安装可执行文件。这篇文章解释如何去运行本地安装的可执行文件">
-<meta property="og:updated_time" content="2017-01-22T12:57:02.000Z">
+<meta property="og:updated_time" content="2017-03-03T15:17:03.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="运行本地安装的 NPM 可执行文件">
 <meta name="twitter:description" content="转载自http://www.2ality.com/2016/01/locally-installed-npm-executables.html  
@@ -403,7 +403,13 @@ npm 中一个很棒的功能是你可以在本地（locally）安装可执行文
 <p>然而我们可以执行叫做 hello 的脚本：<br><figure class="highlight zsh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">npm run hello</div><div class="line"></div><div class="line">&gt; @ hello /Users/supertiny/myStudy/npm-bin-demo</div><div class="line">&gt; ./hello.js</div><div class="line"></div><div class="line">Hello everyone!</div></pre></td></tr></table></figure></p>
 <h2 id="扩展阅读"><a href="#扩展阅读" class="headerlink" title="扩展阅读"></a>扩展阅读</h2><p>获取更多关于 本地安装 npm 的话题， 查阅 <a href="https://leanpub.com/setting-up-es6/read#leanpub-auto-npm-and-local-installs" target="_blank" rel="external">Read Setting up ES6 | Leanpub</a>。</p>
 <hr>
-<p>package.json 的一些知识可以参考阮一峰老师的博客 <a href="http://javascript.ruanyifeng.com/nodejs/packagejson.html#toc4" target="_blank" rel="external">package.json文件 — JavaScript 标准参考教程（alpha）</a></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>解决方案：</p>
+<ol>
+<li>将要执行的命令放在 package.json 中的 scripts 里，使用 npm run xxx 来调用，因为 npm run 这种方式运行时会自动带 ./node_modules/.bin 这个 path。</li>
+<li>在使用的 bash 中添加一个函数，在运行它的时候将 npm bin 命令的结果添加到 path 上。再调用输入的命令。（我用的是 zsh，所以在 .zshrc 里面添加了这条。）  <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> npm-do &#123; (PATH=$(npm bin):<span class="variable">$PATH</span>; <span class="built_in">eval</span> <span class="variable">$@</span>)&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<hr>
 
       
     </div>
@@ -592,7 +598,7 @@ npm 中一个很棒的功能是你可以在本地（locally）安装可执行文
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#从最近的一个-node-modules-中运行可执行文件"><span class="nav-number">1.</span> <span class="nav-text">从最近的一个 node_modules 中运行可执行文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在-npm-包内"><span class="nav-number">2.</span> <span class="nav-text">在 npm 包内</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#扩展阅读"><span class="nav-number">3.</span> <span class="nav-text">扩展阅读</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#从最近的一个-node-modules-中运行可执行文件"><span class="nav-number">1.</span> <span class="nav-text">从最近的一个 node_modules 中运行可执行文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在-npm-包内"><span class="nav-number">2.</span> <span class="nav-text">在 npm 包内</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#扩展阅读"><span class="nav-number">3.</span> <span class="nav-text">扩展阅读</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
 
           </div>
